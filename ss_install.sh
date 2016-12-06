@@ -4,11 +4,11 @@ pip install shadowsocks
 
 cat > /etc/shadowsocks.json<<-EOF
 {
-    "server":"107.182.186.144",
-    "server_port":11982,
+    "server":"217.65.87.253",
+    "server_port":11024,
     "local_address": "127.0.0.1",
     "local_port":1080,
-    "password":"0322Qds",
+    "password":"PaiayNVG",
     "timeout":600,
     "method":"aes-256-cfb",
     "fast_open": false
