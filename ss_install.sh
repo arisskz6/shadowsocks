@@ -1,8 +1,8 @@
-apt-get -y update
-apt-get -y install  python-pip  python-m2crypto
-pip install shadowsocks
+sudo apt-get -y update
+sudo apt-get -y install  python-pip  python-m2crypto
+sudo pip install shadowsocks
 
-cat > /etc/shadowsocks.json<<-EOF
+sudo cat > /etc/shadowsocks.json<<-EOF
 {
     "server":"217.65.87.253",
     "server_port":11024,
@@ -15,15 +15,15 @@ cat > /etc/shadowsocks.json<<-EOF
 }
 EOF
 
-sslocal -c /etc/shadowsocks.json -d start
-apt-get -y install supervisor
+sudo sslocal -c /etc/shadowsocks.json -d start
+sudo apt-get -y install supervisor
 
-cat > /etc/supervisor/conf.d/shadowsocks.conf<<-EOF
+sudo cat > /etc/supervisor/conf.d/shadowsocks.conf<<-EOF
 [program:shadowsocks]
 command=sslocal -c /etc/shadowsocks.json
 autorestart=true
 user=nobody
 EOF
 
-service supervisor start
-supervisorctl reload                                                           
+sudo service supervisor start
+sudo supervisorctl reload                                                           
