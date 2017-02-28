@@ -1,5 +1,5 @@
-
-# ss-python_debian_install.sh
+# OneClick Shadowsocks Install Script
+------------------------------------------------------------------------------------------------------
 ## Introduction
 **One click Install Shadowsocks-Python Client** on Debian local machine,
 builtin my own ss account
