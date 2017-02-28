@@ -7,5 +7,5 @@ cp ~/shadowsocks/polipo.config /etc/polipo/config
 alias hp='http_proxy=http://localhost:8123'
 echo "alias hp='http_proxy=http://localhost:8123'" >> ~/.bashrc
 source ~/.bashrc
-hp curl ip.gs
+http_proxy=http://localhost:8123 curl ip.gs
 cat ~/.bashrc | grep 'hp'
