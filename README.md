@@ -1,8 +1,8 @@
 # OneClick Shadowsocks Install Script
 ------------------------------------------------------------------------------------------------------
 ## Introduction
-**One click Install Shadowsocks-Python Client on Debian local machine,as well as set up polipo http_proxy**
-**builtin my own ss account**
+One click Install **Shadowsocks-Python Client** on **Debian** local machine,as well as set up **Polipo http_proxy**
+builtin my own ss account
 *tested on `debian jessie`and `ubuntu 16.04`*
 Poor English,forgive me,please.
 
@@ -22,6 +22,12 @@ cd ~/shadowsocks
 `bash ~/shadowsocks/ss_update.sh`
 
 or `./ss_update.sh`
+
++ **Control**
+
+```
+systemctl [start/status/restart] shadowsocks.service
+```
 
 thanks to `@clowwindy` and all of others fight for GFW
 
