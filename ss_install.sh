@@ -28,7 +28,7 @@ echo
 echo "[########## ss config set done ##############"
 echo
 echo
-cat > /etc/systemd/system/shadowsocks.service >> "EOF"
+cat > /etc/systemd/system/shadowsocks.service << "EOF"
 [Unit]
 Description=Shadowsocks
 After=network.target
