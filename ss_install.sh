@@ -63,6 +63,7 @@ systemctl start shadowsocks.service > /dev/null 2>&1
 systemctl enable shadowsocks.service > /dev/null 2>&1
 systemctl daemon-reload
 systemctl restart shadowsocks.service
+cp ~/shadowsocks/ss_update.sh ~/ss_update.sh
 echo "Congraduations! shadowsocks install comleted!"
 echo
 echo `systemctl status shadowsocks`
