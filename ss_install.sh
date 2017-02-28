@@ -3,14 +3,13 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH 
 
 echo "shadowsocks-python installation is starting…"
-pip uninstall shadowsocks
-rm -rf /etc/shadowsocks > /dev/null 2>&1
-
+pip uninstall shadowsocks > /dev/null 2>&1
+rm -rf /etc/shadowsocks
 rm -f /etc/systemd/system/shadowsocks.service
 rm -rf /run/shadowsocks*
 apt -y update
 apt -y install  python-pip
-
+pip install --upgrade pip
 pip install shadowsocks && echo "pip install ss completed."
 echo
 echo "------setting ss config---------"
