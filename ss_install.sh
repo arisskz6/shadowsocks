@@ -14,7 +14,7 @@ pip install shadowsocks && echo "pip install ss completed."
 echo
 echo "------setting ss config---------"
 echo
-ls /etc/shadowsocks || mkdir /etc/shadowsocks
+mkdir /etc/shadowsocks
 cat > /etc/shadowsocks/config.json << "EOF"
 {
     "server":"107.182.186.144",
