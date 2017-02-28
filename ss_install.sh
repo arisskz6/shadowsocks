@@ -55,7 +55,6 @@ UMask=0027
 WantedBy=multi-user.target
 EOF
 
-systemctl dameon-reload
 echo
 echo "############# set ss systemd autostart file done #############"
 echo
@@ -63,6 +62,8 @@ echo "-------------Enabling the ss autostart systemd function-------------------
 echo
 systemctl start shadowsocks.service
 systemctl enable shadowsocks.service
-echo "Congraduations! shadowsocks-python install comleted!"
+systemctl daemon-reload
+systemctl restart shadowsocks.service
+echo "Congraduations! shadowsocks install comleted!"
 echo
-echo `systemctl status shadowsocks`
+systemctl status shadowsocks
