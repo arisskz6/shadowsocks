@@ -1,29 +1,64 @@
-sudo apt-get -y update
-sudo apt-get -y install  python-pip  python-m2crypto
-sudo pip install shadowsocks
-
-sudo cat > /etc/shadowsocks.json<<-EOF
+#!/usr/bin/env bash
+echo "shadowsocks-python installation is starting…"
+sudo apt -y update
+sudo apt -y install  python-pip
+sudo pip install shadowsocks && echo "pip install ss completed."
+echo
+echo
+echo "------setting ss config---------"
+echo
+echo
+mkdir /etc/shadowsocks
+cat > /etc/shadowsocks/config.json << "EOF"
 {
-    "server":"217.65.87.253",
-    "server_port":11024,
+    "server":"107.182.186.144",
+    "server_port":11982,
     "local_address": "127.0.0.1",
     "local_port":1080,
-    "password":"PaiayNVG",
+    "password":"0322Qds233",
     "timeout":600,
     "method":"aes-256-cfb",
     "fast_open": false
 }
 EOF
 
-sudo sslocal -c /etc/shadowsocks.json -d start
-sudo apt-get -y install supervisor
+echo 
+echo
 
-sudo cat > /etc/supervisor/conf.d/shadowsocks.conf<<-EOF
-[program:shadowsocks]
-command=sslocal -c /etc/shadowsocks.json
-autorestart=true
-user=nobody
+echo "[########## ss config set done ##############"
+echo
+echo
+cat > /etc/systemd/system/shadowsocks.service >> "EOF"
+[Unit]
+Description=Shadowsocks
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/run/shadowsocks/local.pid
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /run/shadowsocks
+ExecStartPre=/bin/chown root:root /run/shadowsocks
+ExecStart=/usr/local/bin/sslocal --pid-file /var/run/shadowsocks/local.pid -c /etc/shadowsocks/config.json -d start
+Restart=on-abort
+User=root
+Group=root
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target
 EOF
 
-sudo service supervisor start
-sudo supervisorctl reload                                                           
+echo
+echo
+echo "############# set ss systemd autostart file done #############"
+echo
+echo 
+echo "-------------Enabling the ss autostart systemd function----------------------"
+echo
+echo
+systemctl enable shadowsocks.service
+echo "Congraduations! shadowsocks-python install comleted!"
+echo
+echo
+echo `systemctl status shadowsocks`
