@@ -24,7 +24,7 @@ cd ~/shadowsocks
 
 `bash ~/shadowsocks/ss_update.sh`
 
-or `./ss_update.sh`
+or `~/ss_update.sh`
 
 + **Control**
 
