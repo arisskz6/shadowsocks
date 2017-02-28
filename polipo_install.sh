@@ -1,3 +1,5 @@
+apt purge polipo -y
+rm -f /etc/polipo/config > /dev/null 2>&1
 apt -y install polipo
 rm -f /etc/polipo/config
 cp ~/shadowsocks/polipo.config /etc/polipo/config
@@ -5,3 +7,5 @@ cp ~/shadowsocks/polipo.config /etc/polipo/config
 alias hp='http_proxy=http://localhost:8123'
 echo "alias hp='http_proxy=http://localhost:8123'" >> ~/.bashrc
 source ~/.bashrc
+hp curl ip.gs
+cat ~/.bashrc | grep 'hp'
