@@ -60,8 +60,8 @@ echo "############# set ss systemd autostart file done #############"
 echo
 echo "-------------Enabling the ss autostart systemd function----------------------"
 echo
-systemctl start shadowsocks.service
-systemctl enable shadowsocks.service
+systemctl start shadowsocks.service > /dev/null 2>&1
+systemctl enable shadowsocks.service > /dev/null 2>&1
 systemctl daemon-reload
 systemctl restart shadowsocks.service
 echo "Congraduations! shadowsocks install comleted!"
