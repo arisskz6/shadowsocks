@@ -1,4 +1,4 @@
-# OneClick shadowsocks Install Script
+## oneclick shadowsocks install script
 ------------------------------------------------------------------------------------------------------
 ## Introduction
 One click Install **Shadowsocks-Python Client** on **Debian Local Machine**,as well as set up **Polipo http_proxy**
