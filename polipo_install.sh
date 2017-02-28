@@ -1,4 +1,4 @@
-apt purge polipo -y
+apt purge polipo -y > /dev/null 2>&1
 rm -f /etc/polipo/config > /dev/null 2>&1
 apt -y install polipo
 rm -f /etc/polipo/config
