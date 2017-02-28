@@ -60,6 +60,7 @@ echo "############# set ss systemd autostart file done #############"
 echo
 echo "-------------Enabling the ss autostart systemd function----------------------"
 echo
+systemctl start shadowsocks.service
 systemctl enable shadowsocks.service
 echo "Congraduations! shadowsocks-python install comleted!"
 echo
