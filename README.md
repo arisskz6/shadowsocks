@@ -32,8 +32,7 @@ or `~/ss_update.sh`
 systemctl [start/status/restart] shadowsocks.service
 ```
 
-thanks to `@clowwindy` and all of others fight for GFW
-
+thanks to `@clowwindy` and all of others fight for free.
 OS:Debian 8+/Ubuntu 16.04+
 ------------------------------------------------------------------------------------------------------
 `2016-11-13,by arisskz6`
