@@ -21,8 +21,8 @@ Just run `bash ~/shadowsocks/ss_update.sh`
 or `./ss_update.sh`
 
 thanks to `@clowwindy` and all of others fight for GFW
-                                                                                            ```2016-11-12,by arisskz6```
+
 OS:Debian 8+/Ubuntu 16.04+
-`2016-11-13,by arisskz6`
-`update 2017-02-28,
-added polipo for terminal http proxy!`
+------------------------------------------------------------------------------------------------------
+<2016-11-13,by arisskz6>
+updated `2017-02-28`,added polipo for terminal http proxy
