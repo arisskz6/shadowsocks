@@ -9,7 +9,7 @@ rm -f /etc/systemd/system/shadowsocks.service
 rm -rf /run/shadowsocks*
 apt -y update
 apt -y install  python-pip
-pip install --upgrade pip
+pip install --upgrade pip > /dev/null 2>&1
 pip install shadowsocks && echo "pip install ss completed."
 echo
 echo "------setting ss config---------"
