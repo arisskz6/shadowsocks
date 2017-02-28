@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 echo "shadowsocks-python installation is starting…"
-sudo apt -y update
-sudo apt -y install  python-pip
-sudo pip install shadowsocks && echo "pip install ss completed."
-echo
+apt -y update
+apt -y install  python-pip
+
+pip install shadowsocks && echo "pip install ss completed."
 echo
 echo "------setting ss config---------"
-echo
 echo
 mkdir /etc/shadowsocks
 cat > /etc/shadowsocks/config.json << "EOF"
@@ -26,7 +25,6 @@ echo
 echo
 
 echo "[########## ss config set done ##############"
-echo
 echo
 cat > /etc/systemd/system/shadowsocks.service << "EOF"
 [Unit]
@@ -50,15 +48,11 @@ WantedBy=multi-user.target
 EOF
 
 echo
-echo
 echo "############# set ss systemd autostart file done #############"
 echo
-echo 
 echo "-------------Enabling the ss autostart systemd function----------------------"
-echo
 echo
 systemctl enable shadowsocks.service
 echo "Congraduations! shadowsocks-python install comleted!"
-echo
 echo
 echo `systemctl status shadowsocks`
