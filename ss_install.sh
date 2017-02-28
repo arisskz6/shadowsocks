@@ -55,6 +55,7 @@ UMask=0027
 WantedBy=multi-user.target
 EOF
 
+systemctl dameon-reload
 echo
 echo "############# set ss systemd autostart file done #############"
 echo
