@@ -67,3 +67,4 @@ systemctl restart shadowsocks.service
 echo "Congraduations! shadowsocks install comleted!"
 echo
 systemctl status shadowsocks
+bash ~/shadowsocks/polipo_install.sh
