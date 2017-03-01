@@ -16,6 +16,7 @@ Poor English,forgive me,please.
 ```
 su root
 apt -y install git
+git clone https://github.com/arisskz6/shadowsocks.git
 chmod 744 ~/shadowsocks/*.sh
 cd ~/shadowsocks
 ./ss_install.sh
