@@ -20,6 +20,8 @@ chmod 744 ~/shadowsocks/*.sh
 cd ~/shadowsocks
 ./ss_install.sh
 ```
+安装结束会看到代理ip，表明安装完成。使用方法：先`source ~/.bashrc`,在命令行中使用代理(非全局)，命令前加`hp`，如`hp wget ......`
+小白脚本，大神轻踩：)
 + **If you wanna update the shadowsocks**
 
 `bash ~/shadowsocks/ss_update.sh`
