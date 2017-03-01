@@ -3,7 +3,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH 
 
 echo "shadowsocks-python installation is starting..."
-ls /usr/local/bin/sslocal > /dev/null 2>&1 && pip uninstall shadowsocks
+ls /usr/local/bin/sslocal > /dev/null 2>&1 && pip uninstall shadowsocks -y
 rm -rf /etc/shadowsocks
 rm -f /etc/systemd/system/shadowsocks.service
 rm -rf /run/shadowsocks*
