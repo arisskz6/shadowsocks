@@ -3,12 +3,12 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH 
 
 echo "shadowsocks-python installation is starting..."
-ls /usr/local/bin/sslocal > /dev/null 2>&1 && pip uninstall shadowsocks -y
+ls /usr/local/bin/sslocal > /dev/null 2>&1 && pip uninstall shadowsocks -y > /dev/null 2>&1
 rm -rf /etc/shadowsocks
 rm -f /etc/systemd/system/shadowsocks.service
 rm -rf /run/shadowsocks*
 apt -y update
-apt -y install  python-pip
+apt -y install  python-pip > /dev/null 2>&1
 pip install --upgrade pip > /dev/null 2>&1
 pip install shadowsocks && echo "pip install ss completed."
 echo
@@ -68,7 +68,7 @@ cp ~/shadowsocks/ss_update.sh ~/ss_update.sh
 echo `systemctl status shadowsocks`
 echo "############# Congraduations!shadowsocks install comleted!#################"
 echo
-echo `systemctl status shadowsocks` | head -8
+systemctl status shadowsocks | head -8
 echo 
-echo "============ Please wait,starting install polip and configuring------------->"
+echo "## Please wait,starting install polipo##"
 ~/shadowsocks/polipo_install.sh
