@@ -64,9 +64,11 @@ systemctl enable shadowsocks.service > /dev/null 2>&1
 systemctl daemon-reload
 systemctl restart shadowsocks.service
 cp ~/shadowsocks/ss_update.sh ~/ss_update.sh
-echo "Congraduations! shadowsocks install comleted!"
+
+echo `systemctl status shadowsocks`
+echo "############# Congraduations!shadowsocks install comleted!#################"
 echo
 echo `systemctl status shadowsocks`
 echo 
-echo "########### Wait..starting install polipo and configuring #######################
+echo "------------> Wait..starting install polip and configuring------------->"
 ~/shadowsocks/polipo_install.sh
