@@ -71,5 +71,5 @@ echo
 systemctl status shadowsocks | head -8
 echo 
 echo "## Please wait,starting install polipo##"
-echo ~/shadowsocks/polipo_install.sh
+bash ~/shadowsocks/polipo_install.sh
 source ~/.bashrc
