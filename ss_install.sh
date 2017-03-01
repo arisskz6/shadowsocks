@@ -68,7 +68,7 @@ cp ~/shadowsocks/ss_update.sh ~/ss_update.sh
 echo `systemctl status shadowsocks`
 echo "############# Congraduations!shadowsocks install comleted!#################"
 echo
-echo `systemctl status shadowsocks`
+echo `systemctl status shadowsocks` | head -8
 echo 
-echo "------------> Wait..starting install polip and configuring------------->"
+echo "============ Please wait,starting install polip and configuring------------->"
 ~/shadowsocks/polipo_install.sh
