@@ -11,5 +11,5 @@ echo " alias hp='http_proxy=http://localhost:8123'" >> ~/.bashrc
 http_proxy=http://localhost:8123 curl ip.gs
 cat ~/.bashrc | grep 'hp'
 echo 
-echo "All the job has been done successfully!"
+echo "Everything Done!"
 echo "run 'source .bashrc' to initialize and enjoy it!"
