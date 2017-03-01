@@ -70,5 +70,5 @@ echo "############# Congraduations!shadowsocks install comleted!################
 echo
 systemctl status shadowsocks | head -8
 echo 
-echo "Please wait,starting install polipo ..."
+echo "Please wait,start to install polipo ..."
 ~/shadowsocks/polipo_install.sh
