@@ -3,18 +3,18 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH 
 
 echo "shadowsocks-python installation is starting..."
-ls /usr/local/bin/sslocal && sudo pip uninstall shadowsocks -y
-sudo rm -rf /etc/shadowsocks
-sudo rm -f /etc/systemd/system/shadowsocks.service
-sudo rm -rf /run/shadowsocks*
-sudo apt-get update -y
-sudo apt-get install  python-pip -y
-sudo pip install shadowsocks && echo "pip install ss completed."
+ls /usr/local/bin/sslocal && pip uninstall shadowsocks -y
+rm -rf /etc/shadowsocks
+rm -f /etc/systemd/system/shadowsocks.service
+rm -rf /run/shadowsocks*
+apt-get update -y
+apt-get install  python-pip -y
+pip install shadowsocks && echo "pip install ss completed."
 echo
 echo "------setting ss config---------"
 echo
-sudo mkdir /etc/shadowsocks
-sudo cat > /etc/shadowsocks/config.json << "EOF"
+mkdir /etc/shadowsocks
+cat > /etc/shadowsocks/config.json << "EOF"
 {
     "server":"107.182.186.144",
     "server_port":11982,
@@ -32,7 +32,7 @@ echo
 
 echo "[########## ss config set done ##############"
 echo
-sudo cat > /etc/systemd/system/shadowsocks.service << "EOF"
+cat > /etc/systemd/system/shadowsocks.service << "EOF"
 [Unit]
 Description=Shadowsocks
 After=network.target
@@ -59,17 +59,17 @@ echo "############# set ss systemd autostart file done #############"
 echo
 echo "-------------Enabling the ss autostart systemd function----------------------"
 echo
-sudo systemctl start shadowsocks.service > /dev/null 2>&1
-sudo systemctl enable shadowsocks.service > /dev/null 2>&1
-sudo systemctl daemon-reload
-sudo systemctl restart shadowsocks.service
+systemctl start shadowsocks.service > /dev/null 2>&1
+systemctl enable shadowsocks.service > /dev/null 2>&1
+systemctl daemon-reload
+systemctl restart shadowsocks.service
 cp ~/shadowsocks/ss_update.sh ~/ss_update.sh
 
 echo "############# Congraduations!shadowsocks install comleted!#################"
 echo
 
-sudo systemctl status shadowsocks | grep --color=auto -A4 -B2 'Active'
+systemctl status shadowsocks | grep --color=auto -A4 -B2 'Active'
 echo
 
 echo "Please wait,start install polipo ..."
-sudo bash ~/shadowsocks/polipo_install.sh
+bash ~/shadowsocks/polipo_install.sh
