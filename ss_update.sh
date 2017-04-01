@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 rm -rf ~/shadowsocks
-
-apt -y install git
+sudo apt-get install git -y
 cd ~
 git clone https://github.com/arisskz6/shadowsocks.git 
 chmod u+rx ~/shadowsocks/*.sh
