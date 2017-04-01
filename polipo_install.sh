@@ -13,4 +13,5 @@ http_proxy=http://localhost:8123 curl ip.gs
 cat ~/.bashrc | grep 'hp'
 echo 
 echo "Everything Done!"
-echo "run 'source .bashrc' to initialize and enjoy it!"
+echo "run 'source .bashrc' to initialize and enjoy it!
+systemctl status shadowsocks
