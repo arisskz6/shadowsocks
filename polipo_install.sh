@@ -8,6 +8,8 @@ apt-get -y install polipo curl
 rm -f /etc/polipo/config
 cp ~/shadowsocks/polipo.config /etc/polipo/config
 systemctl restart polipo.service && echo "[Restaring polipo.service....OK]"
+
+echo "" >> ~/.bashrc
 echo " alias hp='http_proxy=http://localhost:8123'" >> ~/.bashrc
 source ~/.bashrc
 http_proxy=http://localhost:8123 curl ip.gs
