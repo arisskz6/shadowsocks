@@ -9,8 +9,10 @@ if [ $(id -u) != "0" ]; then
 fi
 
 clear
-echo "################################################"
-echo "shadowsocks-python installation is starting..."
+echo "##########################################################"
+echo "# shadowsocks-python installation is starting...         #"
+echo "##########################################################"
+echo 
 ls /usr/local/bin/sslocal && pip uninstall shadowsocks -y
 rm -rf /etc/shadowsocks
 rm -f /etc/systemd/system/shadowsocks.service
