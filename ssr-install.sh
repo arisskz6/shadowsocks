@@ -77,6 +77,8 @@ else
     while True
     do
         read -p "Use the account set in advance.Y/n?" yn
+    done
+fi
 
 config_path=~/shadowsocksr/user-config.json
 
