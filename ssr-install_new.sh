@@ -8,6 +8,11 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
+# Check if user is root
+if [ $(id -u) != "0" ]; then
+    echo "Error: You must be root to run this script"
+    exit 1
+
 # Stop the shadowsocksr client
 python ~/shadowsocksr/shadowsocks/local.py -c ~/shadowsocksr/user-config.json -d stop
 # Set shadowsocksr config ip
