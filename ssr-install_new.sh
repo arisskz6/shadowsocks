@@ -8,6 +8,9 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
+Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
+Success="${Green_font_prefix}[大功告成！]${Font_color_suffix}"
+
 # Check if user is root
 if [ $(id -u) != "0" ]; then
     echo "Error: You must be root to run this script"
@@ -102,8 +105,10 @@ sed -i "s/\"timeout\":.*$/\"timeout\": 600,/" "$config_path"
 
 
 python ~/shadowsocksr/shadowsocks/local.py -c ~/shadowsocksr/user-config.json -d start
+echo 
 echo "-----"
-echo "Done!"
+echo "${Success}"
 echo "-----"
+echo
 proxychains4 curl ip.gs
 exit 0
