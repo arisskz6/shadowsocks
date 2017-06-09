@@ -15,6 +15,7 @@ Success="${Green_font_prefix}[大功告成！]${Font_color_suffix}"
 if [ $(id -u) != "0" ]; then
     echo "Error: You must be root to run this script"
     exit 1
+fi
 
 # Stop the shadowsocksr client
 python ~/shadowsocksr/shadowsocks/local.py -c ~/shadowsocksr/user-config.json -d stop
@@ -111,4 +112,5 @@ echo "${Success}"
 echo "-----"
 echo
 proxychains4 curl ip.gs
+
 exit 0
