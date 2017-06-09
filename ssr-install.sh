@@ -7,13 +7,14 @@
 # 2017/05/28  First Release by Arisskz6
 # 2017/06/04 Arisskz6 add root auth and 
 # complete the ssr download step...
+# 2017/06/09 Add systemd auto start function
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
 Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
-Success="${Green_font_prefix}[大功告成！]${Font_color_suffix}"
+Success="${Green_font_prefix}[SSR-Python版已安装]${Font_color_suffix}"
 Error="${Red_font_prefix}[错误]${Font_color_suffix}"
-
+Auto_start="${Green_font_prefix}[开机自启配置完成，Enjoy IT！]${Font_color_suffix}"
 # Check if user is root
 if [ $(id -u) != "0" ]; then
     echo -e "${Error} \033[41;37m You must be root to run this script! \033[0m"
@@ -23,8 +24,7 @@ fi
 
 
 # Stop the shadowsocksr client
-python ~/shadowsocksr/shadowsocks/local.py -c ~/shadowsocksr/user-config.json -d stop 
-
+systemctl stop shadowsocksr.service
 # remove the old shadowsocksr directory
 ynpo=""
 while [ -z "$ynpo" ]
@@ -39,6 +39,10 @@ do
         ynpo=""
     fi
 done
+
+rm -rf /var/run/shadowsocksr
+systemctl disable /etc/systemd/system/shadowsocksr.service
+rm -f /etc/systemd/system/shadowsocksr.service
 
 # clone shadowsocksr from github
 cd ~ && git clone -b manyuser https://github.com/shadowsocksr/shadowsocksr.git 
@@ -142,5 +146,50 @@ echo -e "${Success}"
 echo "-----------"
 echo
 proxychains curl ip.gs
+
+# Stop the origional ssr client
+python /root/shadowsocksr/shadowsocks/local.py -c /root/shadowsocksr/user-config.json -d stop
+echo "Shadowsocksr stopped"
+echo
+echo "--Setting ShadowsocksR systemd autostart configure file..."
+# Set ShadowsocksR systemd autostart configure file
+cat > /etc/systemd/system/shadowsocksr.service << "EOF"
+[Unit]
+Description=ShadowsocksR
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/run/shadowsocksr/local.pid
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /run/shadowsocksr
+ExecStartPre=/bin/chown root:root /run/shadowsocksr
+ExecStart=/usr/bin/python /root/shadowsocksr/shadowsocks/local.py --pid-file /var/run/shadowsocksr/local.pid -c /root/shadowsocksr/user-config.json -d start
+Restart=on-abort
+User=root
+Group=root
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target
+
+EOF
+
+echo
+echo "############# set ssr systemd autostart file done #############"
+echo
+echo
+echo "-------------Enabling the ss autostart systemd function----------------------"
+echo
+systemctl start shadowsocksr.service > /dev/null 2>&1
+systemctl enable shadowsocksr.service > /dev/null 2>&1
+systemctl daemon-reload
+systemctl restart shadowsocksr.service
+systemctl status shadowsocksr.service | head -10
+echo
+echo "------------------"
+echo -e "${Auto_start}"
+echo "------------------"
+echo
 
 exit 0
