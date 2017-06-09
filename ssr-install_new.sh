@@ -18,7 +18,6 @@ if [ $(id -u) != "0" ]; then
 fi
 
 cd /root
-
 # Stop the shadowsocksr client
 python ~/shadowsocksr/shadowsocks/local.py -c ~/shadowsocksr/user-config.json -d stop
 # Set shadowsocksr config ip
