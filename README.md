@@ -41,3 +41,4 @@ OS:Debian 8+/Ubuntu 16.04+
 `2016-11-13,by arisskz6`
 
 updated `2017-02-28`,added polipo for terminal http proxy
+updated `2018-01-20`,added gdb plugin for vimrc
