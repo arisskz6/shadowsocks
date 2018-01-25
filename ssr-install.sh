@@ -158,6 +158,7 @@ echo "-----------"
 echo -e "${Success}"
 echo "-----------"
 echo
+proxychains curl ip.sb
 
 # Stop the origional ssr client
 python /root/shadowsocksr/shadowsocks/local.py -c /root/shadowsocksr/user-config.json -d stop
