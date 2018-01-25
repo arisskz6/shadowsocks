@@ -67,7 +67,7 @@ do
     	shadowsocksrport=11982
     	shadowsocksrmethod="chacha20-ietf"
     	shadowsocksrproto="auth_sha1_v4"
-    	shadowsocksrobfs="tls1.2_ticket_auth"
+    	shadowsocksrobfs="tls1.2_ticket_fastauth"
     elif [ "$yn" == N ] || [ "$yn" == n ]; then
         yno=2
         read -p "Please enter the server ip:" shadowsocksrip
@@ -93,8 +93,8 @@ do
     	echo
     	# Set shadowsocksr config encrypt method
     	echo "Please enter the server encrypt method"
-    	read -p "Default method: aes-128-ctr:" shadowsocksrmethod
-    	[ -z "${shadowsocksrmethod}" ] && shadowsocksrmethod="aes-128-ctr"
+    	read -p "Default method: chacha20-ietf:" shadowsocksrmethod
+    	[ -z "${shadowsocksrmethod}" ] && shadowsocksrmethod="chacha20-ietf"
     	echo 
     	echo "-----------------------------------------------------"
     	echo "method= ${shadowsocksrmethod}"
@@ -103,9 +103,9 @@ do
 
     	# Set shadowsocksr config protocol
     	echo "Please enter the server protocol"
-    	read -p "Default protocol: auth_aes128_md5:" shadowsocksrproto
+    	read -p "Default protocol: auth_sha1_v4:" shadowsocksrproto
     	[ -z "${shadowsocksrproto}" ] && 
-	shadowsocksrproto="auth_aes128_md5"
+	shadowsocksrproto="auth_sha1_v4"
     	echo 
     	echo "-----------------------------------------------------"
     	echo "protocol = ${shadowsocksrproto}"
@@ -114,9 +114,9 @@ do
 
     	# Set shadowsocksr config obfs
     	echo "Please enter the server obfs"
-    	read -p "Default obfs: tls1.2_ticket_auth_compatible:" shadowsocksrobfs
+    	read -p "Default obfs: tls1.2_ticket_auth:" shadowsocksrobfs
     	[ -z "${shadowsocksrobfs}" ] && 
-	shadowsocksrobfs="tls1.2_ticket_auth_compatible"
+	shadowsocksrobfs="tls1.2_ticket_auth"
     	echo 
     	echo "-----------------------------------------------------"
     	echo "obfs = ${shadowsocksrobfs}"
@@ -158,7 +158,6 @@ echo "-----------"
 echo -e "${Success}"
 echo "-----------"
 echo
-proxychains curl ip.sb
 
 # Stop the origional ssr client
 python /root/shadowsocksr/shadowsocks/local.py -c /root/shadowsocksr/config.json -d stop
@@ -177,7 +176,7 @@ PIDFile=/run/shadowsocksr/local.pid
 PermissionsStartOnly=true
 ExecStartPre=/bin/mkdir -p /run/shadowsocksr
 ExecStartPre=/bin/chown root:root /run/shadowsocksr
-ExecStart=/usr/bin/python /root/shadowsocksr/shadowsocks/local.py --pid-file /var/run/shadowsocksr/local.pid -c /root/shadowsocksr/user-config.json -d start
+ExecStart=/usr/bin/python /root/shadowsocksr/shadowsocks/local.py --pid-file /var/run/shadowsocksr/local.pid -c /root/shadowsocksr/config.json -d start
 Restart=on-abort
 User=root
 Group=root
@@ -204,5 +203,6 @@ echo "------------------"
 echo -e "${Auto_start}"
 echo "------------------"
 echo
+proxychains curl ip.sb
 
 exit 0
