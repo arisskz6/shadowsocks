@@ -45,7 +45,7 @@ systemctl disable /etc/systemd/system/shadowsocksr.service
 rm -f /etc/systemd/system/shadowsocksr.service
 
 # clone shadowsocksr from github
-cd ~ && git clone -b manyuser https://github.com/shadowsocksr/shadowsocksr.git 
+cd ~ && git clone -b manyuser https://github.com/shadowsocksrr/shadowsocksr.git
 if [ ! -d ~/shadowsocksr ]; then
     echo -e "${Error} Fail to clone shadowsocksr from github!"
     exit 2
@@ -60,13 +60,13 @@ do
 
     if [ "$yn" == Y ] || [ "$yn" == y ]; then
         yno=1
-        echo "Using the default doubiss account HK 2"
-    	shadowsocksrip="27.0.232.201"
-    	shadowsocksrpwd="PaiayNVG"
-    	shadowsocksrport=11024
-    	shadowsocksrmethod="aes-256-cfb"
-    	shadowsocksrproto="auth_aes128_md5"
-    	shadowsocksrobfs="tls1.2_ticket_auth"
+        echo "Using the BangwagongHost Califnia CN2 line"
+    	shadowsocksrip="65.49.215.38"
+    	shadowsocksrpwd="0322Qds233"
+    	shadowsocksrport=11982
+    	shadowsocksrmethod="chacha20-ietf"
+    	shadowsocksrproto="auth_sha1_v4"
+    	shadowsocksrobfs="tls1.2_ticket_fastauth"
     elif [ "$yn" == N ] || [ "$yn" == n ]; then
         yno=2
         read -p "Please enter the server ip:" shadowsocksrip
@@ -121,13 +121,24 @@ do
     	echo "obfs = ${shadowsocksrobfs}"
     	echo "-----------------------------------------------------"
     	echo
+	
+    	# Set shadowsocksr config obfs_param
+    	echo "Please enter the server obfs_param"
+    	read -p "Default obfs_param: origin.cdn77.com:" shadowsocksrobfs_param
+    	[ -z "${shadowsocksrobfs_param}" ] && 
+	shadowsocksrobfs_param="origin.cdn77.com"
+    	echo 
+    	echo "-----------------------------------------------------"
+    	echo "obfs_param = ${shadowsocksrobfs_param}"
+    	echo "-----------------------------------------------------"
+    	echo	
     else
         yno=""
 fi
 
 done
 
-config_path=~/shadowsocksr/user-config.json
+config_path=~/shadowsocksr/config.json
 
 sed -i "s/\"server\":.*$/\"server\": \"${shadowsocksrip}\",/" "$config_path"
 sed -i '/server_ipv6/d' "$config_path"
@@ -136,19 +147,20 @@ sed -i "s/\"password\":.*$/\"password\": \"${shadowsocksrpwd}\",/" "$config_path
 sed -i "s/\"method\":.*$/\"method\": \"${shadowsocksrmethod}\",/" "$config_path"
 sed -i "s/\"protocol\":.*$/\"protocol\": \"${shadowsocksrproto}\",/" "$config_path"
 sed -i "s/\"obfs\":.*$/\"obfs\": \"${shadowsocksrobfs}\",/" "$config_path"
-sed -i "s/\"timeout\":.*$/\"timeout\": 600,/" "$config_path"
+sed -i "s/\"obfs_param\":.*$/\"obfs_param\": \"${shadowsocksrobfs_param}\",/" "$config_path"
+sed -i "s/\"timeout\":.*$/\"timeout\": 300,/" "$config_path"
 
 
-python ~/shadowsocksr/shadowsocks/local.py -c ~/shadowsocksr/user-config.json -d start
+python ~/shadowsocksr/shadowsocks/local.py -c ~/shadowsocksr/config.json -d start
 echo
 echo "-----------"
 echo -e "${Success}"
 echo "-----------"
 echo
-proxychains curl ip.gs
+proxychains curl ip.sb
 
 # Stop the origional ssr client
-python /root/shadowsocksr/shadowsocks/local.py -c /root/shadowsocksr/user-config.json -d stop
+python /root/shadowsocksr/shadowsocks/local.py -c /root/shadowsocksr/config.json -d stop
 echo "Shadowsocksr stopped"
 echo
 echo "--Setting ShadowsocksR systemd autostart configure file..."
