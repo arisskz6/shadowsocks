@@ -139,7 +139,7 @@ fi
 
 done
 
-config_path=~/shadowsocksr/config.json
+config_path=~/shadowsocksr/user-config.json
 
 sed -i "s/\"server\":.*$/\"server\": \"${shadowsocksrip}\",/" "$config_path"
 sed -i '/server_ipv6/d' "$config_path"
@@ -152,7 +152,7 @@ sed -i "s/\"obfs_param\":.*$/\"obfs_param\": \"${shadowsocksrobfs_param}\",/" "$
 sed -i "s/\"timeout\":.*$/\"timeout\": 300,/" "$config_path"
 
 
-python ~/shadowsocksr/shadowsocks/local.py -c ~/shadowsocksr/config.json -d start
+python ~/shadowsocksr/shadowsocks/local.py -c ~/shadowsocksr/user-config.json -d start
 echo
 echo "-----------"
 echo -e "${Success}"
@@ -160,7 +160,7 @@ echo "-----------"
 echo
 
 # Stop the origional ssr client
-python /root/shadowsocksr/shadowsocks/local.py -c /root/shadowsocksr/config.json -d stop
+python /root/shadowsocksr/shadowsocks/local.py -c /root/shadowsocksr/user-config.json -d stop
 echo "Shadowsocksr stopped"
 echo
 echo "--Setting ShadowsocksR systemd autostart configure file..."
@@ -169,24 +169,20 @@ cat > /etc/systemd/system/shadowsocksr.service << "EOF"
 [Unit]
 Description=ShadowsocksR
 After=network.target
-
 [Service]
 Type=forking
 PIDFile=/run/shadowsocksr/local.pid
 PermissionsStartOnly=true
 ExecStartPre=/bin/mkdir -p /run/shadowsocksr
 ExecStartPre=/bin/chown root:root /run/shadowsocksr
-ExecStart=/usr/bin/python /root/shadowsocksr/shadowsocks/local.py --pid-file /var/run/shadowsocksr/local.pid -c /root/shadowsocksr/config.json -d start
+ExecStart=/usr/bin/python /root/shadowsocksr/shadowsocks/local.py --pid-file /var/run/shadowsocksr/local.pid -c /root/shadowsocksr/user-config.json -d start
 Restart=on-abort
 User=root
 Group=root
 UMask=0027
-
 [Install]
 WantedBy=multi-user.target
-
 EOF
-
 echo
 echo "############# set ssr systemd autostart file done #############"
 echo
@@ -204,5 +200,4 @@ echo -e "${Auto_start}"
 echo "------------------"
 echo
 proxychains curl ip.sb
-
 exit 0
