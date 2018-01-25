@@ -67,7 +67,7 @@ do
     	shadowsocksrport=11982
     	shadowsocksrmethod="chacha20-ietf"
     	shadowsocksrproto="auth_sha1_v4"
-    	shadowsocksrobfs="tls1.2_ticket_fastauth"
+    	shadowsocksrobfs="tls1.2_ticket_auth"
     elif [ "$yn" == N ] || [ "$yn" == n ]; then
         yno=2
         read -p "Please enter the server ip:" shadowsocksrip
