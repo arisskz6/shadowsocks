@@ -8,6 +8,7 @@
 # 2017/06/04 Arisskz6 add root auth and 
 # complete the ssr download step...
 # 2017/06/09 Add systemd auto start function
+# 2018/01/25 Updated the sever config
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
