@@ -2,6 +2,9 @@ set nocompatible			" be iMproved, required
 set laststatus=2  	 		 " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
 
+"fix powerline status no color issue
+set t_Co=256
+
 filetype off				" required 
 
 " set the runtime path to include Vundle and initialize
