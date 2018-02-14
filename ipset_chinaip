@@ -1,4 +1,5 @@
 #!/bin/bash
+# History: 2018/02/13 
 
 cd $(cd $(dirname $0); pwd)
 rm -fr ipset.chinaip.*
