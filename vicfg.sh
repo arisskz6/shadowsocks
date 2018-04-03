@@ -4,7 +4,7 @@
 # 2018/02/03 First Release by arisskz6
 
 read -p "Before we configure vimrc,do you sure 'git' and 'vim' have been installed?y/N" yn
-if [ "$yn" = "y" ] || [ "$yn" = Y"]
+if [ "$yn" = "y" ] || [ "$yn" = "Y"]
 then
 	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 	cp ~/shadowsocks/vimrc ~/.vimrc
