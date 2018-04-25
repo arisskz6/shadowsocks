@@ -20,6 +20,9 @@ rm -rf /run/shadowsocks*
 apt-get update -y
 apt-get install  python-pip -y
 pip install shadowsocks && echo "pip install ss completed."
+
+#fix the problem in old openssl.py
+sed -i "s/cleanup/reset/g" /usr/local/lib/python2.7/dist-packages/shadowsocks/crypto/openssl.py
 echo
 echo "------setting ss config---------"
 echo
