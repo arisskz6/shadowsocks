@@ -9,6 +9,8 @@
 # complete the ssr download step...
 # 2017/06/09 Add systemd auto start function
 # 2018/01/25 Updated the sever config
+# 2018/07/21 Updated the Default Server
+
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
@@ -61,8 +63,8 @@ do
 
     if [ "$yn" == Y ] || [ "$yn" == y ]; then
         yno=1
-        echo "Using the BangwagongHost Califnia CN2 line"
-    	shadowsocksrip="65.49.215.38"
+        echo "Using the Default Server"
+    	shadowsocksrip=$(echo MTA0LjE5OS4xNjUuMTM2 | base64 -d)
     	shadowsocksrpwd="0322Qds233"
     	shadowsocksrport=11982
     	shadowsocksrmethod="chacha20-ietf"
