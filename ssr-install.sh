@@ -26,7 +26,7 @@ if [ $(id -u) != "0" ]; then
 fi
 
 # Archlinux
-# pacman -S python proxychains --noconfirm && sed -i "s/^socks4 .*$/socks5 127.0.0.1 1080" /etc/proxychains.conf
+# pacman -S python proxychains --noconfirm && sed -i "s/^socks4 .*$/socks5 127.0.0.1 1080/g" /etc/proxychains.conf
 # Stop the shadowsocksr client
 systemctl stop shadowsocksr.service
 # remove the old shadowsocksr directory
