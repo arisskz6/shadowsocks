@@ -26,7 +26,13 @@ if [ $(id -u) != "0" ]; then
 fi
 
 # Archlinux
-# pacman -S python proxychains --noconfirm && sed -i "s/^socks4 .*$/socks5 127.0.0.1 1080/g" /etc/proxychains.conf
+OS=$(cat -A /etc/issue | grep "Arch" | sed "s/ .*$//g")
+if [ $OS == "Arch" ]; then
+	pacman -S python proxychains --noconfirm && sed -i "s/^socks4 .*$/socks5 127.0.0.1 1080/g" /etc/proxychains.conf
+else
+	echo "Please install python3 and proxychains first"
+	exit 1
+fi
 # Stop the shadowsocksr client
 systemctl stop shadowsocksr.service
 # remove the old shadowsocksr directory
