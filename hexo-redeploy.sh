@@ -1,108 +1,169 @@
-#!/bin/bash -e
+#!/bin/bash
 # a Script to redeploy my hexo blog
 # History:
-# 2018/07/15 v0.1
+# 2018/08/03 v0.0.2 修正了错误，重构代码，使其模块化，便于后续维护修改
 # By arisskz6  arisstz6@gmail.com
 
-read -p "请在您博客想放置的目录下执行此脚本，是否继续？y/N" dir_yn
-if [ ${dir_yn} != "y" ] && [ ${dir_yn} != "Y" ]; then
-		echo "没有选择是"
-		exit
-fi
-# 安装nodejs 和 npm
-#pacman -Q nodejs
-#if [ $? -eq 0 ]; then
-#		node_exist=1
-#else
-#		node_exist=0
-#fi
-#pacman -Q npm
-#if [ $? -eq 0 ]; then
-#		npm_exist=1
-#else
-#		npm_exist=0
-#fi
-#
-#if [ ${node_exist} -eq 0 ]; then
-#	   	sudo pacman -Sy nodejs
-#fi
-
-#if [ ${npm_exist} -eq 1 ]; then
-#	   	sudo pacman -Sy npm
-#fi
-
-check_noexist()
+# 获取用户输入的yes或no
+get_yesno()
 {
-	pacman -Q $1
-	if [ $? -eq 0 ];then
-			noexist=1;
+	local yn
+	local result=0
+	read -p "请选择是(y/Y)或否(n/N): " yn
+	while [ $yn != "y" ] && [ $yn != "Y" ] && [ $yn != "n" ] && [ $yn != "N" ]
+	do
+			read -p "对不起，请选择是(y/Y)或否(n/N): " yn
+	done
+	if [ $yn == "y" ] || [ $yn == "Y" ]; then
+			result=0
 	else
-			noexist=0;
-	fi
-
-	return $noexist
+			result=1
+	fi	
+	return $result
 }
-
-if $(check_noexist nodejs); then
-		sudo pacman -Sy nodejs --noconfirm
-fi
-
-if $(check_noexist npm); then
-		sudo pacman -Sy npm --noconfirm
-fi
-
-# 配置hexo环境
-npm config set prefix ~/.npm
-export PATH="$PATH:$HOME/.npm/bin"
-echo export PATH="$PATH:$HOME/.npm/bin" >> ~/.zshrc
-echo export PATH="$PATH:$HOME/.npm/bin" >> ~/.bashrc
-
 # 配置git环境
-#git config --global user.name "arisskz6"
-#git config --global user.email arisstz6@gmail.com
+git_config()
+{
+		local user_name=$(git config --get user.name)
+		local user_email=$(git config --get user.email)
+		if [ "$user_name" != "arisskz6" ]; then
+				git config --global user.name "arisskz6"
+		fi
+		if [ $user_email != "arisstz6@gmail.com" ]; then
+				git config --global user.email "arisstz6@gmail.com"
+		fi
 
-mksshkey()
+}
+# 生成ssh密钥对
+make_sshkey()
 {
 	ssh-keygen -t rsa -b 4096 -C "arisstz6@gmail.com"
 	eval "$(ssh-agent -s)" #启动ssh-agent后台程序
 	ssh-add ~/.ssh/id_rsa #添加ssh密钥到ssh-agent
 }
-echo "这是一个专用(懒人)脚本，用来在换电脑或重装系统后重新配置hexo博客编写环境"
-echo "在进一步操作之前，请确保完成了以下工作:"
 
-# 设置flag, 满足条件flag被变为1，后面会检测flag的值，为1则程序继续执行，否则退出
-flag1=0
+sshkey_config()
+{
 if [ -e ~/.ssh/id_rsa ] && [ -e ~/.ssh/id_rsa.pub ]; then
-		flag1=1
+		local exist=0
+else
+		local exist=1
 fi
-
-
-if [ "${flag1}" -eq 0 ]; then
-		mksshkey
+if [ $exist -ne 0 ]; then
+		make_sshkey
 fi
+}
+package_exist()
+{
+		pacman -Q $1 > /dev/null 2>&1
+		if [ $? -eq 0 ]; then
+				retval=0
+		else
+				retval=1
+		fi
+}
 
-echo "请将你的ssh公钥添加到Github上"
-read -p "是否已经将本机的ssh公钥添加到Github上? y/N" yn
-if [ "$yn" != "y" ] && [ "$yn" != "Y" ]; then
+packages_install()
+{
+		local packages=(git openssh nodejs npm)
+		for i in ${packages[@]}
+		do
+				package_exist
+				if [ $retval -ne 0 ]; then
+						echo "正在安装${i}..."
+						sudo pacman -S $i --noconfirm
+				else
+						echo "${i}已安装."
+				fi
+		done
+}
+
+echo "这是一个专用(懒人)脚本，用来在换电脑或重装系统后重新配置hexo博客编辑环境"
+echo
+echo "请在您博客想放置的目录下执行此脚本，是否继续？"
+get_yesno
+if [ $? -eq 1 ]; then
+		echo "您选择了不继续执行，正在退出..."
+		echo
+		exit 1
+fi
+# 安装需要的软件
+packages_install
+sleep 3
+# 配置git
+echo
+echo "正在配置Git..."
+sleep 1
+git_config
+
+# 配置ssh key
+echo
+echo "正在配置ssh key..."
+echo
+sleep 2
+sshkey_config
+echo
+cat ~/.ssh/id_rsa.pub
+echo
+sleep 3
+echo "请复制上面的ssh公钥添加到Github上"
+echo "是否已经将本机的ssh公钥添加到Github上?"
+get_yesno
+if [ $? -eq 1 ]; then
 	echo "您没有将本机ssh公钥添加到Github, 无法继续执行，退出中..."
 	exit 1
 fi
+sleep 2
 
 
 # 测试ssh到Github是否已连通
+echo
+echo "正在测试ssh到Github是否已连通..."
+echo
 ssh -T git@github.com
 
 # 克隆博客仓库到本地
-git clone git@github.com:arisskz6/arisskz6.github.io.git
+sleep 2
+echo
+echo "正在克隆博客仓库到本地..."
+sleep 1
+if [ ! -d arisskz6.github.io ]; then
+	git clone git@github.com:arisskz6/arisskz6.github.io.git
+else
+		echo "arisskz6.github.io.git目录已存在，是否覆盖？"
+		get_yesno
+		if [ $? -eq 0 ]; then
+				rm -rf arisskz6.github.io 
+				git clone git@github.com:arisskz6/arisskz6.github.io.git
+		fi
+fi
 
+# 配置nodejs
+echo
+echo "正在配置nodejs..."
+echo
+sleep 2
+npm config set prefix ~/.npm
+NPM_HOME="$HOME/.npm/bin"
+echo $PATH | grep "$NPM_HOME"
+if [ $? -ne 0 ]; then
+		export PATH="$NPM_HOME:$PATH"
+		echo export PATH="$NPM_HOME:$PATH" >> ~/.bashrc
+fi
 # 安装hexo
+echo
+echo "正在安装hexo..."
+echo
+sleep 1
 npm install hexo-cli -g
 cd arisskz6.github.io
+git config credential.helper store #在本地保存用户名和密码，避免每次提交都输入密码
 npm install
 npm install hexo-deployer-git --save
 
 echo 
 echo "-------------------------------------"
-echo "- hexo博客编辑环境配置完毕，enjoy it! -"
+echo "- hexo博客编辑环境部署完毕, enjoy it! -"
 echo "-------------------------------------"
 echo 
+sleep 3
