@@ -6,7 +6,7 @@
 read -p "Before we configure vimrc,do you sure 'git' and 'vim' have been installed?y/N" yn
 if [ "$yn" = "y" ] || [ "$yn" = "Y"]
 then
-	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+	git clone https://github.com/itchyny/lightline.vim ~/.vim/bundle/lightline.vim
 	cp ./vimrc ~/.vimrc
 	vim +PluginInstall +qall
 	echo 
