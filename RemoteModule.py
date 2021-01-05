@@ -1,7 +1,4 @@
 # -*-coding: utf-8-*-
-import sys
-sys.path.append("../../")
-from config.env_config import *
 from fabric import Connection
 
 class RemoteModule():
